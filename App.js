@@ -1,9 +1,9 @@
 import React from 'react';
-import Home from './src/Page/Home';
+import Splash from './src/Page/Splash';
 
 
 export default function App() {
   return (
-    <Home />
+    <Splash />
   );
 }
