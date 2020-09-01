@@ -32,6 +32,7 @@ const CategoriesScreen = (props) => {
                 barStyle="light-content"
             />
             <FlatList
+            showsVerticalScrollIndicator={false}
                 keyExtractor={(item, index) => item.id}
                 data={CATEGORIES}
                 renderItem={renderGridItem}
@@ -43,7 +44,12 @@ const CategoriesScreen = (props) => {
 }
 
 CategoriesScreen.navigationOptions = {
-    // headerTitle: 'Meal Categories',
+    headerTitle:  <Text style={{
+        fontFamily: fonts.tiki, 
+        fontSize:24, 
+        color:'#474747', 
+        alignSelf:'center', 
+        marginLeft:20}}>Meals Category</Text>,
     headerStyle: {
         backgroundColor: 'white',
     },
@@ -55,7 +61,7 @@ export default CategoriesScreen
 const styles = StyleSheet.create({
     page: {
         flex: 1,
-        margin: 5
+        marginHorizontal: 5
     },
     gridItem: {
         margin: 10,

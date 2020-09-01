@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, FlatList } from 'react-native'
 import { CATEGORIES, MEALS } from '../data/dummy-data'
 import Colors from '../constant/Colors'
 import MealItem from '../component/MealItem'
+import { fonts } from '../asset/fonts'
 
 const CategoryMealsScreen = (props) => {
     const renderMealItem = itemData => {
@@ -13,7 +14,12 @@ const CategoryMealsScreen = (props) => {
                 duration = {itemData.item.duration}
                 complexity ={itemData.item.complexity}
                 affordability ={itemData.item.affordability}
-                onSelactMeal={() => { }}
+                onSelectMeal={() => {
+                    props.navigation.navigate({routeName: 'MealDetail', 
+                    params: {
+                        mealId: itemData.item.id
+                    }})
+                 }}
             />
         )
     }
@@ -41,8 +47,8 @@ CategoryMealsScreen.navigationOptions = (navigationData) => {
     const selectedCategory = CATEGORIES.find(cat => cat.id === catId)
 
     return {
-        headerTitle: selectedCategory.title,
-        headerTintColor: selectedCategory.color
+        headerTitle: <Text style={{fontFamily: fonts.tiki, fontSize:30, color: "#474747"}}>{selectedCategory.title}</Text>,
+        // headerTintColor: selectedCategory.color
     }
 
 }
@@ -52,6 +58,6 @@ export default CategoryMealsScreen
 const styles = StyleSheet.create({
     page: {
         flex: 1,
-        padding:10
+        marginHorizontal:10
     }
 })

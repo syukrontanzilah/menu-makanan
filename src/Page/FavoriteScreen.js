@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-const Favorite = () => {
+const FavoriteScreen = () => {
     return (
         <View>
             <Text>Favorite</Text>
@@ -9,7 +9,7 @@ const Favorite = () => {
     )
 }
 
-export default Favorite
+export default FavoriteScreen
 
 const styles = StyleSheet.create({
     page: {
