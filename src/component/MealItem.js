@@ -20,6 +20,7 @@ const MealItem = (props) => {
                 <Text style={styles.minuts}> {props.duration}min </Text>
                 <Text style={styles.minuts}>- {props.complexity} </Text>
                 <Text style={styles.minuts}>- {props.affordability}</Text>
+                
                 </View>  
                    </View>     
             </ImageBackground>
