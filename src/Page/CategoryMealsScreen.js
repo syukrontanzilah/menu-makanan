@@ -1,22 +1,37 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
-import { CATEGORIES } from '../data/dummy-data'
+import { StyleSheet, Text, View, Button, FlatList } from 'react-native'
+import { CATEGORIES, MEALS } from '../data/dummy-data'
 import Colors from '../constant/Colors'
+import MealItem from '../component/MealItem'
 
 const CategoryMealsScreen = (props) => {
+    const renderMealItem = itemData => {
+        return (
+            <MealItem
+                title={itemData.item.title}
+                imageUrl ={itemData.item.imageUrl}
+                duration = {itemData.item.duration}
+                complexity ={itemData.item.complexity}
+                affordability ={itemData.item.affordability}
+                onSelactMeal={() => { }}
+            />
+        )
+    }
     const catId = props.navigation.getParam('categoryId')
-    const selectedCategory = CATEGORIES.find(cat => cat.id === catId)
+    // const selectedCategory = CATEGORIES.find(cat => cat.id === catId)
+    const displayedMeals = MEALS.filter(
+        meal => meal.categoryIds.indexOf(catId) >= 0
+    )
+
     return (
         <View style={styles.page}>
-            <Text>{selectedCategory.title}</Text>
-            <Button title="Go to details"
-                onPress={() => {
-                    props.navigation.navigate({ routeName: 'MealDetail' })
-                }} />
-            <Button title="Go back"
-                onPress={() => {
-                    props.navigation.pop()
-                }} />
+            <FlatList
+                showsVerticalScrollIndicator={false}
+                data={displayedMeals}
+                keyExtractor={(item, index) => item.id}
+                renderItem={renderMealItem}
+                style={{}}
+            />
         </View>
     )
 }
@@ -37,7 +52,6 @@ export default CategoryMealsScreen
 const styles = StyleSheet.create({
     page: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        padding:10
     }
 })
