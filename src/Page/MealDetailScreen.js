@@ -5,6 +5,26 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import HeaderButton from '../component/HeaderButton'
 import { fonts } from '../asset/fonts';
+import DefaultText from '../component/DefaultText';
+
+const ListItem = props => {
+    const Icon = () => {
+        if(props.type === "resep"){
+          return  <Ionicons name="radio-button-on-outline" color="#474747"/>
+        }
+        else{
+         return  <Ionicons name="caret-forward-outline" color="#474747"/>
+        }
+    }
+    return (
+        <View style={styles.listItem}>
+            <Icon name="caret-forward-outline" color="#474747"/>
+            <View style={{flex:1, marginLeft:5, marginBottom:0, marginTop:-6}}>
+                 <DefaultText>{props.children}</DefaultText>
+            </View>
+        </View>
+    )
+}
 
 const MealDetailScreen = (props) => {
     const mealId = props.navigation.getParam('mealId');
@@ -16,22 +36,40 @@ const MealDetailScreen = (props) => {
             <ImageBackground
                 source={{ uri: selectedMeal.imageUrl }}
                 style={{ width: '100%', height: 220, }} />
-            <View style={{ paddingHorizontal: 15 }}>
+            <View style={{ flexDirection: 'row', borderRadius: 100 / 2 }}>
+                <View style={styles.box}>
+                    <Ionicons name="alarm-outline" size={14} color="gray" />
+                    <Text style={styles.texBox}> {selectedMeal.duration} Minutes</Text>
+                </View>
+                <View style={styles.box}>
+                    <Ionicons name="star" size={14} color="gray" />
+                    <Text style={styles.texBox}> {selectedMeal.affordability}</Text>
+                </View>
+                <View style={styles.box}>
+                    <Ionicons name="heart" size={14} color="gray" />
+                    <Text style={styles.texBox}> {selectedMeal.complexity}</Text>
+                </View>
+            </View>
+            {/* content container */}
+            <View style={{ paddingHorizontal: 15, paddingBottom:20 }}>
                 {/* <Text>{selectedMeal.title}</Text> */}
-
                 <View style={{ flexDirection: 'row', marginTop: 15, alignItems: 'center' }}>
                     <Ionicons name="document-text-outline" size={18} />
-                    <Text style={{ fontSize: 22, fontFamily: fonts.tiki, marginLeft:8}}>Ingredients:</Text>
+                    <Text style={{ fontSize: 22, fontFamily: fonts.tiki, marginLeft: 8 }}>Ingredients:</Text>
                 </View>
 
-                <Text style={{ fontFamily: fonts.default, fontSize: 20 }}>* {selectedMeal.ingredients.join('\n* ')}</Text>
+                <DefaultText>- {selectedMeal.ingredients.join('\n- ')}</DefaultText>
 
-                <View style={{ flexDirection: 'row', marginTop: 15, alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', marginTop: 15, alignItems: 'center', marginBottom:5 }}>
                     <Ionicons name="restaurant" size={18} />
                     <Text style={{ fontSize: 22, fontFamily: fonts.tiki, marginLeft: 8 }}>Cook Steps:</Text>
                 </View>
 
-                <Text style={{ fontFamily: fonts.default, fontSize: 20, }}>- {selectedMeal.steps.join('\n- ')}</Text>
+                {/* <DefaultText>- {selectedMeal.steps.join('\n- ')}</DefaultText> */}
+                {
+                    selectedMeal.steps.map(step =>
+                        <ListItem key={step}>{step}</ListItem>)
+                }
 
                 {/* <Text>Meal Information:</Text>
                 <Text>Gluten = {selectedMeal.isGlutenFree}</Text>
@@ -39,16 +77,7 @@ const MealDetailScreen = (props) => {
                 <Text>Vegan = {selectedMeal.isVegan}</Text>
                 <Text>Vegetarian = {selectedMeal.isVegetarian}</Text>
                 <Text>Cook Type: {selectedMeal.complexity}</Text> */}
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-                    <Ionicons name="alarm-outline" size={20} color="gray" />
-                    <Text style={{ fontFamily: fonts.default, fontSize: 20, color: 'gray' }}> {selectedMeal.duration} Minutes</Text>
-                </View>
-
             </View>
-
-
-
-
         </ScrollView>
     )
 }
@@ -72,5 +101,26 @@ const styles = StyleSheet.create({
     page: {
         flex: 1,
 
+    },
+    box: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        // marginTop: 20,
+        // marginBottom: 20,
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: 'lightgray',
+        paddingVertical: 5,
+    },
+    texBox: {
+        fontFamily: fonts.default,
+        fontSize: 17,
+        color: 'gray',
+        marginBottom: 5
+    },
+    listItem: {
+        flexDirection: 'row',
+        paddingHorizontal:10,
+        marginBottom:4
     }
 })

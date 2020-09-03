@@ -100,7 +100,7 @@ const FiltersNavigator = createStackNavigator({
         screen: FilterPage,
         navigationOptions: {
             headerTitle: <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={{ fontSize: 27, color: Colors.primary, fontFamily: fonts.tiki, marginLeft: 20 }}>Filters</Text>
+                <Text style={{ fontSize: 27, color: 'green', fontFamily: fonts.tiki, marginLeft: 20 }}>Filters</Text>
             </View>
         },
 
