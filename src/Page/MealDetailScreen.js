@@ -21,7 +21,7 @@ const ListItem = props => {
     return (
         <View style={styles.listItem}>
             <Icon name="caret-forward-outline" color="#474747" />
-            <View style={{ flex: 1, marginLeft: 5, marginBottom: 0, marginTop: -6 }}>
+            <View style={{ flex: 1, marginLeft: 5, marginBottom: 0, marginTop: -6, borderBottomColor:'lightgray', borderBottomWidth:1, paddingBottom:2 }}>
                 <DefaultText>{props.children}</DefaultText>
             </View>
         </View>
