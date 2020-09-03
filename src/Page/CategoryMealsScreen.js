@@ -4,25 +4,9 @@ import { CATEGORIES, MEALS } from '../data/dummy-data'
 import Colors from '../constant/Colors'
 import MealItem from '../component/MealItem'
 import { fonts } from '../asset/fonts'
+import MealList from '../component/MealList'
 
 const CategoryMealsScreen = (props) => {
-    const renderMealItem = itemData => {
-        return (
-            <MealItem
-                title={itemData.item.title}
-                imageUrl ={itemData.item.imageUrl}
-                duration = {itemData.item.duration}
-                complexity ={itemData.item.complexity}
-                affordability ={itemData.item.affordability}
-                onSelectMeal={() => {
-                    props.navigation.navigate({routeName: 'MealDetail', 
-                    params: {
-                        mealId: itemData.item.id
-                    }})
-                 }}
-            />
-        )
-    }
     const catId = props.navigation.getParam('categoryId')
     // const selectedCategory = CATEGORIES.find(cat => cat.id === catId)
     const displayedMeals = MEALS.filter(
@@ -31,12 +15,9 @@ const CategoryMealsScreen = (props) => {
 
     return (
         <View style={styles.page}>
-            <FlatList
-                showsVerticalScrollIndicator={false}
-                data={displayedMeals}
-                keyExtractor={(item, index) => item.id}
-                renderItem={renderMealItem}
-                style={{}}
+            <MealList
+            listData ={displayedMeals}
+            navigation={props.navigation}
             />
         </View>
     )

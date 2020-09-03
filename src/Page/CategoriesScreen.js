@@ -4,6 +4,8 @@ import { fonts } from '../asset/fonts'
 import { CATEGORIES } from '../data/dummy-data'
 import Colors from '../constant/Colors'
 import CategoryGrid from '../component/CategoryGrid'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import HeaderButton from '../component/HeaderButton'
 
 
 
@@ -32,7 +34,7 @@ const CategoriesScreen = (props) => {
                 barStyle="light-content"
             />
             <FlatList
-            showsVerticalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
                 keyExtractor={(item, index) => item.id}
                 data={CATEGORIES}
                 renderItem={renderGridItem}
@@ -43,17 +45,25 @@ const CategoriesScreen = (props) => {
     )
 }
 
-CategoriesScreen.navigationOptions = {
-    headerTitle:  <Text style={{
-        fontFamily: fonts.tiki, 
-        fontSize:24, 
-        color:'#474747', 
-        alignSelf:'center', 
-        marginLeft:20}}>Meals Category</Text>,
-    headerStyle: {
-        backgroundColor: 'white',
-    },
-    headerTintColor: Colors.primary
+CategoriesScreen.navigationOptions = (navData) => {
+    return {
+        headerLeft: <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item title="Menu" iconName="ios-menu" onPress={() => { 
+                navData.navigation.toggleDrawer()
+            }} />
+        </HeaderButtons>,
+        headerTitle: <Text style={{
+            fontFamily: fonts.tiki,
+            fontSize: 24,
+            color: Colors.primary,
+            alignSelf: 'center',
+            marginLeft: 20
+        }}>Meals Category</Text>,
+        headerStyle: {
+            backgroundColor: 'white',
+        },
+        headerTintColor: Colors.primary,
+    }
 }
 
 export default CategoriesScreen

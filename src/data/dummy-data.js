@@ -15,14 +15,19 @@ export const CATEGORIES = [
     new Category('c9', 'Korean', 'red', 'https://img-global.cpcdn.com/recipes/1876da47b0757a84/751x532cq70/rabokki-korean-food-foto-resep-utama.jpg'),
     new Category('c10', 'Thailand', '#f54ced', 'https://lh3.googleusercontent.com/proxy/yS924SHim0X_y_LMXfxwlyTK2AdYHo0GaehqWJHJLDAqHsIXOnGjVku7BtWo_pnORgoHbz6V6lunQwh9F6Wg6nf8l-waBOS70Cayk0AuBBHNLwtaz2RI5F-sv7TVQCmaTErwjIRheShY06M0_BDiSbVV6ivdPUdZ_L8'),
     new Category('c11', 'Indian', '#999333', 'https://lh3.googleusercontent.com/proxy/cPto0RaameuqbvdRGVZL-koL9NI4Aihv4NEGeZ3ZeowGyEyWwZ9NxlnFMAoL_5DMUOHYJPnC3WnVCKCb1uPPv0CF1MvfY4BZRzHnzqJY3p4zYgmCoRC1otKB9Ccr2h57lEctq2xnzUhJjT-8GjXjm-TUy3UDnGTystfjN5n46g'),
-    new Category('c12', 'Turkish', 'chocolate', 'https://nomadparadise.com/wp-content/uploads/2019/12/turkishfood3-1024x640.jpg')
+    new Category('c12', 'Turkish', 'chocolate', 'https://nomadparadise.com/wp-content/uploads/2019/12/turkishfood3-1024x640.jpg'),
+    new Category('c13', 'Spanish', '#30e444',  'https://cdn.pixabay.com/photo/2018/03/31/19/29/schnitzel-3279045_1280.jpg'),
+    new Category('c14', 'Brazilian', '#f54242',   'https://cdn.pixabay.com/photo/2018/06/18/16/05/indian-food-3482749_1280.jpg'),
+
+
+
 ]
 
 
 export const MEALS = [
     new Meal(
         'm1',
-        ['c1', 'c2'],
+        ['c1', 'c2', 'c14'],
         'Spaghetti With Tomato Sauce',
         'affordable',
         'simple',
@@ -43,7 +48,12 @@ export const MEALS = [
             'In the meantime, heaten up some olive oil and add the cut onion.',
             'After 2 minutes, add the tomato pieces, salt, pepper and your other spices.',
             'The sauce will be done once the spaghetti are.',
-            'Feel free to add some cheese on top of the finished dish.'
+            'Feel free to add some cheese on top of the finished dish.',
+            'Cut the tomatoes and the onion into small pieces.',
+            'Boil some water - add salt to it once it boils.',
+            'Put the spaghetti into the boiling water - they should be done in about 10 to 12 minutes.',
+            'In the meantime, heaten up some olive oil and add the cut onion.',
+            'After 2 minutes, add the tomato pieces, salt, pepper and your other spices.',
           ],
           false,
           true,
@@ -53,7 +63,7 @@ export const MEALS = [
 
   new Meal(
     'm2',
-    ['c2'],
+    ['c2', 'c13', 'c1'],
     'Toast Hawaii',
     'affordable',
     'simple',
@@ -67,6 +77,9 @@ export const MEALS = [
       'Butter'
     ],
     [
+      'Butter one side of the white bread',
+      'Layer ham, the pineapple and cheese on the white bread',
+      'Bake the toast for round about 10 minutes in the oven at 200°C',
       'Butter one side of the white bread',
       'Layer ham, the pineapple and cheese on the white bread',
       'Bake the toast for round about 10 minutes in the oven at 200°C'
@@ -108,7 +121,7 @@ export const MEALS = [
 
   new Meal(
     'm4',
-    ['c4'],
+    ['c4', 'c1', 'c2'],
     'Wiener Schnitzel',
     'luxurious',
     'challenging',
@@ -131,7 +144,10 @@ export const MEALS = [
       'Heat the butter and oil in a large pan (allow the fat to get very hot) and fry the schnitzels until golden brown on both sides.',
       'Make sure to toss the pan regularly so that the schnitzels are surrounded by oil and the crumbing becomes ‘fluffy’.',
       'Remove, and drain on kitchen paper. Fry the parsley in the remaining oil and drain.',
-      'Place the schnitzels on awarmed plate and serve garnishedwith parsley and slices of lemon.'
+      'Place the schnitzels on awarmed plate and serve garnishedwith parsley and slices of lemon.',
+      'Tenderize the veal to about 2–4mm, and salt on both sides.',
+      'On a flat plate, stir the eggs briefly with a fork.',
+      'Lightly coat the cutlets in flour then dip into the egg, and finally, coat in breadcrumbs.',
     ],
     false,
     false,
