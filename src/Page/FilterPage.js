@@ -4,7 +4,8 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import HeaderButton from '../component/HeaderButton'
 import Colors from '../constant/Colors'
 import { fonts } from '../asset/fonts'
-import {useSelector} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import {setFilters} from '../store/actions/meals'
 
 const FilterSwitch = props => {
     return (
@@ -21,12 +22,14 @@ const FilterSwitch = props => {
 }
 
 const FilterPage = (props) => {
-const {navigation} = props;
+    const { navigation } = props;
 
     const [isGlutenFree, setIsGlutenFree] = useState(false)
     const [isLactoseFree, setIsLactoseFree] = useState(false)
     const [isVegan, setIsVegan] = useState(false)
     const [isVegetarian, setIsVegetarian] = useState(false)
+
+    const dispatch = useDispatch()
 
     const saveFilters = useCallback(() => {
         const appliedFilters = {
@@ -35,14 +38,15 @@ const {navigation} = props;
             vegan: isVegan,
             vegetarian: isVegetarian
         }
-        console.log(appliedFilters)
-    },[isGlutenFree, isLactoseFree, isVegan, isVegetarian])
+
+        dispatch(setFilters(appliedFilters))
+    }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian, dispatch])
 
     useEffect(() => {
         navigation.setParams({
             save: saveFilters
         })
-    },[saveFilters])
+    }, [saveFilters])
 
     return (
         <View style={styles.page}>
@@ -70,7 +74,7 @@ const {navigation} = props;
 
             <TouchableOpacity
                 onPress={
-                     props.navigation.getParam('save')
+                    props.navigation.getParam('save')
                 }
                 activeOpacity={0.5}
                 style={{

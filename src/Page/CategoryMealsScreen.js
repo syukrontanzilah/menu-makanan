@@ -6,6 +6,7 @@ import MealItem from '../component/MealItem'
 import { fonts } from '../asset/fonts'
 import MealList from '../component/MealList'
 import { useSelector } from 'react-redux'
+import DefaultText from '../component/DefaultText'
 
 const CategoryMealsScreen = (props) => {
     const catId = props.navigation.getParam('categoryId')
@@ -14,6 +15,11 @@ const CategoryMealsScreen = (props) => {
     const displayedMeals = availableMeals.filter(
         meal => meal.categoryIds.indexOf(catId) >= 0
     )
+    if (displayedMeals.length === 0) {
+        return <View style={styles.notFound}>
+            <DefaultText>No meals found, maybe check your filtered</DefaultText>
+        </View>
+    }
 
     return (
         <View style={styles.page}>
@@ -42,5 +48,10 @@ const styles = StyleSheet.create({
     page: {
         flex: 1,
         marginHorizontal: 10
+    },
+    notFound: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 })

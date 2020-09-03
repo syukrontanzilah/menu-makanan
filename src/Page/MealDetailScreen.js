@@ -7,7 +7,7 @@ import HeaderButton from '../component/HeaderButton'
 import { fonts } from '../asset/fonts';
 import DefaultText from '../component/DefaultText';
 import { useSelector, useDispatch } from 'react-redux';
-import {toggleFavorite} from '../store/actions/meals'
+import { toggleFavorite } from '../store/actions/meals'
 
 const ListItem = props => {
     const Icon = () => {
@@ -30,6 +30,7 @@ const ListItem = props => {
 
 const MealDetailScreen = (props) => {
     const availableMeals = useSelector(state => state.meals.meals)
+    const currentMealFavorite = useSelector(state => state.meals.favoriteMeals.some(meal => meal.id === mealId))
     const mealId = props.navigation.getParam('mealId');
     const selectedMeal = availableMeals.find(meal => meal.id === mealId)
 
@@ -41,9 +42,12 @@ const MealDetailScreen = (props) => {
 
     useEffect(() => {
         // props.navigation.setParams({ mealTitle: selectedMeal.title })
-        props.navigation.setParams({toggleFav: toggleFavoriteHandler})
+        props.navigation.setParams({ toggleFav: toggleFavoriteHandler })
     }, [toggleFavoriteHandler])
 
+    useEffect(() => {
+        props.navigation.setParams({ isFav: currentMealFavorite })
+    }, [currentMealFavorite])
 
     return (
         <ScrollView
@@ -103,10 +107,11 @@ MealDetailScreen.navigationOptions = (navigationData) => {
     const mealTitle = navigationData.navigation.getParam('mealTitle')
     // const selectedMeal = MEALS.find(meal => meal.id === mealId)
     const toggleFavorite = navigationData.navigation.getParam('toggleFav')
+    const isFavorite = navigationData.navigation.getParam('isFav')
     return {
-    headerTitle: <Text style={{ fontFamily: fonts.tiki, fontSize: 22, color: '#474747' }}>{mealTitle}</Text>,
+        headerTitle: <Text style={{ fontFamily: fonts.tiki, fontSize: 22, color: '#474747' }}>{mealTitle}</Text>,
         headerRight: <HeaderButtons HeaderButtonComponent={HeaderButton}>
-            <Item title="Favorite" iconName="heart"
+            <Item title="Favorite" iconName={isFavorite ? "heart" : "heart-outline"}
                 onPress={toggleFavorite}
             />
         </HeaderButtons>
