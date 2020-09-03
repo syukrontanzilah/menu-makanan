@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Image, ImageBackground, ScrollView } from 'react-native'
 import { MEALS } from '../data/dummy-data';
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -6,29 +6,45 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import HeaderButton from '../component/HeaderButton'
 import { fonts } from '../asset/fonts';
 import DefaultText from '../component/DefaultText';
+import { useSelector, useDispatch } from 'react-redux';
+import {toggleFavorite} from '../store/actions/meals'
 
 const ListItem = props => {
     const Icon = () => {
-        if(props.type === "resep"){
-          return  <Ionicons name="radio-button-on-outline" color="#474747"/>
+        if (props.type === "radio") {
+            return <Ionicons name="radio-button-on-outline" color="#474747" />
         }
-        else{
-         return  <Ionicons name="caret-forward-outline" color="#474747"/>
+        else {
+            return <Ionicons name="caret-forward-outline" color="#474747" />
         }
     }
     return (
         <View style={styles.listItem}>
-            <Icon name="caret-forward-outline" color="#474747"/>
-            <View style={{flex:1, marginLeft:5, marginBottom:0, marginTop:-6}}>
-                 <DefaultText>{props.children}</DefaultText>
+            <Icon name="caret-forward-outline" color="#474747" />
+            <View style={{ flex: 1, marginLeft: 5, marginBottom: 0, marginTop: -6 }}>
+                <DefaultText>{props.children}</DefaultText>
             </View>
         </View>
     )
 }
 
 const MealDetailScreen = (props) => {
+    const availableMeals = useSelector(state => state.meals.meals)
     const mealId = props.navigation.getParam('mealId');
-    const selectedMeal = MEALS.find(meal => meal.id === mealId)
+    const selectedMeal = availableMeals.find(meal => meal.id === mealId)
+
+    const dispatch = useDispatch();
+
+    const toggleFavoriteHandler = useCallback(() => {
+        dispatch(toggleFavorite(mealId))
+    }, [dispatch, mealId])
+
+    useEffect(() => {
+        // props.navigation.setParams({ mealTitle: selectedMeal.title })
+        props.navigation.setParams({toggleFav: toggleFavoriteHandler})
+    }, [toggleFavoriteHandler])
+
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -42,16 +58,16 @@ const MealDetailScreen = (props) => {
                     <Text style={styles.texBox}> {selectedMeal.duration} Minutes</Text>
                 </View>
                 <View style={styles.box}>
-                    <Ionicons name="star" size={14} color="gray" />
+                    <Ionicons name="server-outline" size={14} color="gray" />
                     <Text style={styles.texBox}> {selectedMeal.affordability}</Text>
                 </View>
                 <View style={styles.box}>
-                    <Ionicons name="heart" size={14} color="gray" />
+                    <Ionicons name="sad-outline" size={14} color="gray" />
                     <Text style={styles.texBox}> {selectedMeal.complexity}</Text>
                 </View>
             </View>
             {/* content container */}
-            <View style={{ paddingHorizontal: 15, paddingBottom:20 }}>
+            <View style={{ paddingHorizontal: 15, paddingBottom: 20 }}>
                 {/* <Text>{selectedMeal.title}</Text> */}
                 <View style={{ flexDirection: 'row', marginTop: 15, alignItems: 'center' }}>
                     <Ionicons name="document-text-outline" size={18} />
@@ -60,7 +76,7 @@ const MealDetailScreen = (props) => {
 
                 <DefaultText>- {selectedMeal.ingredients.join('\n- ')}</DefaultText>
 
-                <View style={{ flexDirection: 'row', marginTop: 15, alignItems: 'center', marginBottom:5 }}>
+                <View style={{ flexDirection: 'row', marginTop: 15, alignItems: 'center', marginBottom: 5 }}>
                     <Ionicons name="restaurant" size={18} />
                     <Text style={{ fontSize: 22, fontFamily: fonts.tiki, marginLeft: 8 }}>Cook Steps:</Text>
                 </View>
@@ -83,13 +99,15 @@ const MealDetailScreen = (props) => {
 }
 
 MealDetailScreen.navigationOptions = (navigationData) => {
-    const mealId = navigationData.navigation.getParam('mealId')
-    const selectedMeal = MEALS.find(meal => meal.id === mealId)
+    // const mealId = navigationData.navigation.getParam('mealId')
+    const mealTitle = navigationData.navigation.getParam('mealTitle')
+    // const selectedMeal = MEALS.find(meal => meal.id === mealId)
+    const toggleFavorite = navigationData.navigation.getParam('toggleFav')
     return {
-        headerTitle: <Text style={{ fontFamily: fonts.tiki, fontSize: 22, color: '#474747' }}>{selectedMeal.title}</Text>,
+    headerTitle: <Text style={{ fontFamily: fonts.tiki, fontSize: 22, color: '#474747' }}>{mealTitle}</Text>,
         headerRight: <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item title="Favorite" iconName="heart"
-                onPress={() => { }}
+                onPress={toggleFavorite}
             />
         </HeaderButtons>
     }
@@ -120,7 +138,7 @@ const styles = StyleSheet.create({
     },
     listItem: {
         flexDirection: 'row',
-        paddingHorizontal:10,
-        marginBottom:4
+        paddingHorizontal: 10,
+        marginBottom: 4
     }
 })

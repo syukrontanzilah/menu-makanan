@@ -4,6 +4,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import HeaderButton from '../component/HeaderButton'
 import Colors from '../constant/Colors'
 import { fonts } from '../asset/fonts'
+import {useSelector} from 'react-redux'
 
 const FilterSwitch = props => {
     return (
